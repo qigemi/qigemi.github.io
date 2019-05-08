@@ -4,14 +4,15 @@ layout: post
 ## 2019.4.25
 -------
 **PointNet**  
-对三维点云的分类和分割网络，文章讨论了输入点顺序改变时网络性能的不变性，没看懂。<br/>
-1. 输入$n\times3$矩阵，n为点数，3为x,y,z坐标，经过一个变换矩阵（由T-net生成）将点云变换到相对标准的位置，避免整体transform的影响。<br/>
-2. 变换后经过多层感知机（MLP）分别对每个点进行处理，生成$n\times64$ feature，再对feature做（T-net）transform。<br/>
-3. 对上述feature再做MLP，max pooling，FC等操作得到全局特征向量，由此可做分类。<br/>
-4. 将该向量和$n\times64$ feature concatenate,经过MLP得到每个点的分类。<br/>
+对三维点云的分类和分割网络，文章讨论了输入点顺序改变时网络性能的不变性，没看懂。
+1. 输入$n\times3$矩阵，n为点数，3为x,y,z坐标，经过一个变换矩阵（由T-net生成）将点云变换到相对标准的位置，避免整体transform的影响。
+2. 变换后经过多层感知机（MLP）分别对每个点进行处理，生成$n\times64$ feature，再对feature做（T-net）transform。
+3. 对上述feature再做MLP，max pooling，FC等操作得到全局特征向量，由此可做分类。
+4. 将该向量和$n\times64$ feature concatenate,经过MLP得到每个点的分类。
+
 ---
 **FoldNet**  
-基于pointnet的改进，用encoder-decoder结构做无监督学习，可以生成一个点云的特征向量，还可以通过该向量将一个点云变换为另一个。<br/>
+基于pointnet的改进，用encoder-decoder结构做无监督学习，可以生成一个点云的特征向量，还可以通过该向量将一个点云变换为另一个。  
 其中对pooling方法也有改进，他不是全局pooling，而是利用最近邻图（NNG）对某点附近的几个点做pooling（max or average）。
 
 ---
@@ -41,7 +42,7 @@ related works：
 本文中对每幅图像计算一个金字塔，第一层最大化变换（即对比度增强）后图像与参考图像（人为定义的亮度良好的图像）的互信息。第二层最大化参考图像与条件概率分布的互信息：
 
 \[
-\boldsymbol{u}^* = \mathop{\arg\min}_{\boldsymbol u} MI(I^*, f(I,\boldsymbol u)|f(I,\boldsymbol u^0))
+\boldsymbol{u}^* = \mathop{\arg\min}_{\boldsymbol u} MI(I^{* }, f(I,\boldsymbol u)|f(I,\boldsymbol u^0))
 \]
 其中MI表示互信息，$f(I,u)$ 为对图像$I$ 做参数为$u(a,b)$ 的灰度映射变换，即灰度小于a的置0，大于b的置1，a,b之间的线性变换到0,1之间。后续层应该类似该过程。
 
@@ -65,6 +66,7 @@ related works：
 1. 用CAD创建物体的3D模型，在位姿空间中采样（在更可能的位姿上更多的采样pose），生成深度图像数据库。用模拟器仿真物体自由下落后出现的位姿，统计直方图，用聚类的方法选择要保存的位姿。  
 2. 根据输入的深度图像和数据库估计物体在图像中的大概位置，在该位置上对数据库中的所有位姿计算残差，残差小的作为候选。区域选择方法：深度图中值滤波，提取边缘，计算距离变换，得到可能表示单独物体的像素联通域。根据深度图对每个patch计算平均深度，选大小较大距离较近的几个，用形状中心作为物体坐标系原点，即可得到初始的$T(x,y,z)$。这时候选的patch可能有1-3个。对这几个候选与所有pose计算残差，同时优化Ｔ，得到大概的pose。
 3. 用ICP方法优化位姿。
+
 ---
 **Model Globally, Match Locally: Efficient and Robust 3D Object Recognition**   
 本文为稠密点云策略中的，取点对生成候选pose的方法。
