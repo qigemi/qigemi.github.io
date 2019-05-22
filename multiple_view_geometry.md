@@ -1,14 +1,19 @@
 ---
-layout: pose
+layout: post
 ---
 -------------
 # 基本矩阵和本质矩阵
-\[
-E = [t]_{\times}R
-\]
+设左右相机矩阵有如下形式，则基本矩阵和本质矩阵可表示为：
+$$
+P=K[I|0] \qquad P^{\prime}=K^{\prime}[R|t]\\
+F={[e^{\prime}]}_{\times}K^{\prime}RK^{-1}=K^{\prime-T} {[t]}_{\times} R K^{-1}\\
+E = {[t]}_{\times}R
+$$
+
 其中
-\[
-[t]_{\times} =  
+
+$$
+{[t]}_{\times} =  
 \left[
  \begin{matrix}
    0 & -t_3 & t_2 \\
@@ -16,8 +21,9 @@ E = [t]_{\times}R
    -t_2 & t_1 & 0
   \end{matrix}
   \right]
-\]
-\[
+$$
+
+$$
 R = R_\alpha R_\beta R_\gamma =
 \left[
  \begin{matrix}
@@ -40,15 +46,9 @@ R = R_\alpha R_\beta R_\gamma =
    0 & 0 & 1
   \end{matrix}
 \right]
-\]
-从1到2的转换角度为 $\alpha, \beta, \gamma$，则坐标转换关系为 $S_1 = RS_2$。
+$$
 
-\[
-P=K[I|0] \qquad P^{\prime}=K^{\prime}[R|t]\\
-F={[e^{\prime}]}_{\times}K^{\prime}RK^{-1}=K^{\prime-T} {[t]}_{\times} R K^{-1}
-\]
-
-对左右图像中的点，满足
+从1到2的转换角度为 $\alpha, \beta, \gamma$，则坐标转换关系为 $S_1 = RS_2$。对左右图像中的点，满足
 
 $$x^{\prime T}Fx=0\\
 x^{\prime T}Ex=0$$
@@ -64,8 +64,7 @@ subject\ to\quad  &\|f\|=1
 \end{align} \tag{1}
 $$
 
-该方法称为八点法。求得的F可能不是奇异矩阵，这时通过奇异值分解，将最小的奇异值置0，得到满足条件的F。
-
+该方法称为八点法。求得的F可能不是奇异矩阵，这时通过奇异值分解，将最小的奇异值置0，得到满足条件的F。  
 如果匹配点数只有7个，则A的秩为7,$Af=0$ 的解是 $\alpha F_1+(1-\alpha )F_2$ 构成的二维空间，通过F的奇异性约束 $det(\alpha F_1+(1-\alpha )F_2) = 0$ 列出 $\alpha$ 的三次多项式方程，解出三个F。
 
 ### 2.归一化八点法
