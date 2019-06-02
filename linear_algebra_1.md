@@ -84,12 +84,10 @@ $$\left[\begin{matrix} 1 & 0 & 7 & -3 \\ 0 & 1 & -2 & 1 \end{matrix}\right]$$
 $$E\left[A\ I\right]=\left[EA\ EI\right]=\left[I\ E\right]\\ \Rightarrow EA=I$$
 
 # 3.LU分解，转置与置换
-这节课主要推导了LU分解，计算了消元法的计算复杂度（我本来不想增加这样的一节，但是怕后面序号乱了）。对于矩阵 $A\in \mathbb{R}^{n\times n}$ ，在不考虑交换行的情况下，消元的复杂度为 $n^3/3$，对b的计算复杂度为 $n^2$。
+这节课主要推导了LU分解，计算了消元法的计算复杂度。对于矩阵 $A\in \mathbb{R}^{n\times n}$ ，在不考虑交换行的情况下，消元的复杂度为 $n^3/3$，对b的计算复杂度为 $n^2$。
 
 矩阵转置定义为 $A_{ij}^T=A_{ji}$，如果 $A^T=A$ 则A称为对称矩阵（symmetric matrix）。
 
 到这里消元这部分就告一段落了，下面进入向量空间的部分。
 
 ---
-
-# 4.向量空间
