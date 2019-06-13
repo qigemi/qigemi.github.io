@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <hr />
+<h1 id="基本矩阵和本质矩阵">基本矩阵和本质矩阵</h1>
+<p>设左右相机矩阵有如下形式，则基本矩阵和本质矩阵可表示为：
+<script type="math/tex">P=K[I|0] \qquad P^{\prime}=K^{\prime}[R|t]\\
+F={[e^{\prime}]}_{\times}K^{\prime}RK^{-1}=K^{\prime-T} {[t]}_{\times} R K^{-1}\\
+E = {[t]}_{\times}R</script></p>
+
+<p>其中</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+{[t]}_{\times} =  
+\left[
+ \begin{matrix}
+   0 & -t_3 & t_2 \\
+   t_3 & 0 & -t_1 \\
+   -t_2 & t_1 & 0
+  \end{matrix}
+  \right] %]]></script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+R = R_\alpha R_\beta R_\gamma =
+\left[
+ \begin{matrix}
+   1 & 0 & 0 \\
+   0 & \cos\alpha & -\sin\alpha \\
+   0 & \sin\alpha & \cos\alpha
+  \end{matrix}
+\right]
+\left[
+ \begin{matrix}
+   \cos\beta & 0 & \sin\beta \\
+   0 & 1 & 0 \\
+   -\sin\beta & 0 & \cos\beta
+  \end{matrix}
+\right]
+\left[
+ \begin{matrix}
+   \cos\gamma & -\sin\gamma & 0 \\
+   \sin\gamma & \cos\gamma & 0 \\
+   0 & 0 & 1
+  \end{matrix}
+\right] %]]></script>
+
+<p>从1到2的转换角度为 $\alpha, \beta, \gamma$，则坐标转换关系为 $S_1 = RS_2$。对左右图像中的点，满足</p>
+
+<script type="math/tex; mode=display">x^{\prime T}Fx=0\\
+x^{\prime T}Ex=0</script>
+
+<h2 id="计算基本矩阵">计算基本矩阵</h2>
+<h3 id="1基本方程">1.基本方程</h3>
+<p>由 $x^{\prime T}Fx=0$ 及多组点对应可以列出线性方程组 $Af=0, A\in \mathbb R^{n\times 9}$ , n为匹配点数。如果A的秩为8，则可以求A的零空间得到f。如果A的秩为9，则通过最小二乘方法求</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+minimize\quad  &\|Af\|\\
+subject\ to\quad  &\|f\|=1
+\end{align} \tag{1} %]]></script>
+
+<p>该方法称为八点法。求得的F可能不是奇异矩阵，这时通过奇异值分解，将最小的奇异值置0，得到满足条件的F。<br />
+如果匹配点数只有7个，则A的秩为7,$Af=0$ 的解是 $\alpha F_1+(1-\alpha )F_2$ 构成的二维空间，通过F的奇异性约束 $det(\alpha F_1+(1-\alpha )F_2) = 0$ 列出 $\alpha$ 的三次多项式方程，解出三个F。</p>
+
+<h3 id="2归一化八点法">2.归一化八点法</h3>
+<p>将匹配点图像坐标归一化到 $(0,\sqrt2)$ ，再用八点法计算，好处是解比较稳定。</p>
+
+<h3 id="3代数最小化算法">3.代数最小化算法</h3>
+<p>上述解线性方程方法需要强制约束F为奇异矩阵（方法是奇异值分解），这不是最优的数值方法。另一种方法是直接将F表示为奇异矩阵的形式 $F=M{[e]}<em>{\times}$ ，其中M是非奇异矩阵，${[e]}</em>{\times}$ 是任意反对称矩阵。在这种表示下做最优化式 $(1)$ 。</p>
+
+<h3 id="4几何距离">4.几何距离</h3>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+  </body>
+</html>

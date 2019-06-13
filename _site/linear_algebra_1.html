@@ -11,11 +11,96 @@
 然后通过变换中的一些特殊情形，引出列空间，零空间，行列式等概念。最后还提了一嘴其他类型的向量，如函数，也引出了基函数和傅立叶分解等。
 总之整个系列经常让我发出“aha”的感叹，如果早点看这视频就好了。</p>
 
-<p>后来我又开始看<a href="http://">公开课</a>，这也是很经典的课，里面的老头讲课有点随性，但是能让人更加理解线性代数的内容，和我本科时听的线代完全不一样。
+<p>后来我又开始看MIT<a href="http://">公开课</a>，这也是很经典的课，里面的老头讲课有点随性，但是能让人更加理解线性代数的内容，和我本科时听的线代完全不一样。
 公开课更系统一些，b站那个视频系列只是通过可视化讲了一部分。下面主要总结公开课中的内容。</p>
 
-<h1 id="1矩阵和消元">1.矩阵和消元</h1>
-<p>这里是用线性方程组引出矩阵的概念的，线性方程组可以写成 $Ax=b$ 的形式，我们就研究A的性质。</p>
+<p>第一部分，主要介绍消元法。</p>
+
+<hr />
+
+<h1 id="1矩阵和消元elimination">1.矩阵和消元（elimination）</h1>
+<p>这里是用线性方程组引出矩阵的概念的，线性方程组可以写成 $Ax=b$ 的形式，如果我们考虑矩阵的行，每行表示一个方程，也可以看作一条直线，则方程组的解就是直线交点的坐标。如果考虑矩阵的列，即方程组可以写成下列形式（假设是两个未知数）：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left[ \begin{matrix} a_1 & a_2 \end{matrix} \right]
+\left[\begin{matrix} x_1 \\ x_2\end{matrix}\right]=b\\
+a_1x_1 + a_2x_2 = b\tag{1} %]]></script>
+
+<p>则等价于求矩阵列向量的线性组合使其等于b。这里就出现了方程组可能无解的情况，因为如果列向量不是线性无关的，则b可能无法用列向量表示出来，此时方程组无解。</p>
+
+<p>下面介绍解方程的高斯消元法，我们知道对方程组做初等行变换不会改变解，高斯消元法就是对增广矩阵做初等行变换，使矩阵A变成上三角的形式，这样可以从最后一个方程开始，每次只求解一个一元一次方程，比较简单。这里举个例子</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left[ \begin{matrix} 1 & 2 & 1 \\ 3&8&1 \\ 0&4&1 \end{matrix} \right]
+\left[\begin{matrix} x_1 \\ x_2\\x_3\end{matrix}\right]=
+\left[\begin{matrix} 2\\12 \\ 2\end{matrix}\right] %]]></script>
+
+<p>经过消元得到</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left[ \begin{matrix}
+\boldsymbol{1} & 2 & 1 \\
+ 0 & \boldsymbol 2 & -2 \\
+  0 & 0 & \boldsymbol 5 \end{matrix}\right]
+\left[\begin{matrix} x_1 \\ x_2 \\ x_3 \end{matrix}\right]=
+\left[\begin{matrix} 2 \\ 6 \\ -10 \end{matrix}\right] %]]></script>
+
+<p>从最后一行解得 $x_3=-2$，带入第二行得 $x_2=1$，最后 $x_1=2$。消元后的上三角矩阵记为U（upper triangular），其对角线上的元素称为主元（pivot），如果消元过程中对角线主元位置上出现0，则通过换行将下面行中该位置不是0的行换上来。</p>
+
+<p>如何将消元的过程用矩阵表示？<strong>我们知道矩阵右乘向量表示矩阵列的线性组合，如式（1）所示，而左乘向量则得到行的线性组合</strong>。所以消元可以表示为：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left[ \begin{matrix} 1 & 0 & 0 \\ 0 &  1 & 0 \\ 0 & -2 & 1 \end{matrix}\right]
+\left[\begin{matrix} 1 & 0 & 0 \\ -3 &  1 & 0 \\ 0 & 0 & 1 \end{matrix}\right]
+\left[\begin{matrix} 1 & 2 & 1 \\ 3 & 8 & 1 \\ 0 & 4 & 1 \end{matrix}\right]=
+\left[\begin{matrix} 1 & 2 & 1 \\ 0 & 2 & -2 \\ 0 & 0 &  5 \end{matrix}\right] %]]></script>
+
+<p>将消元矩阵记为E，则上式可表示为：</p>
+
+<script type="math/tex; mode=display">E_{32}E_{21}A=U</script>
+
+<p>这些变换矩阵E都是可逆的，等式两边乘以它们的逆可以得到著名的LU分解：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+A=E^{-1}U=LU\\
+\left[\begin{matrix} 1 & 2 & 1 \\ 3 & 8 & 1 \\ 0 & 4 & 1 \end{matrix}\right]=
+\left[\begin{matrix} 1 & 0 & 0 \\ 3 & 1 & 0 \\ 0 & 2 & 1 \end{matrix}\right]
+\left[\begin{matrix} 1 & 2 & 1 \\ 0 & 2 & -2 \\ 0 & 0 &  5 \end{matrix}\right] %]]></script>
+
+<p>注意 $E^{-1}$ 是一个下三角矩阵，而且矩阵中的元素和消元乘数是对应的，对角线上的元素都是1，我们把它记为L（lower triangular）。有时我们也可以把U中的主元提取出来作为对角阵D（diagonal），则分解变为：</p>
+
+<script type="math/tex; mode=display">A=LDU</script>
+
+<p>当然其他情况中还可能出现交换行的操作，即出现主元位置为0的情况，该操作对应的矩阵E又叫置换矩阵（permutation matrix，这里有一个群论的大坑，不知道什么时候填）。如果需要交换行，则需要增加一个所有置换矩阵的乘积P：</p>
+
+<script type="math/tex; mode=display">PA=LU</script>
+
+<h1 id="2乘法和求逆">2.乘法和求逆</h1>
+<p>矩阵乘法我们都会计算，$AB$ 可以看成矩阵B的行的线性组合，或者矩阵A的列的线性组合，也可以用定义式或者分块计算。</p>
+
+<p>矩阵逆是针对方阵的一个概念，定义为 $A^{-1}A=AA^{-1}=I$，不是所有方阵都有逆，比如列或行线性相关的方阵就不可逆。方阵不可逆，当且仅当存在 $x\neq 0$ 使得 $Ax=0$。那么如何求逆呢，这里还是用消元法，高斯-约当消元法，比高斯消元多两步，（1）回代使主元上方的所有元素等于0，（2）使主元为1，这样消元结果就是单位阵。举个例子：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+A=\left[\begin{matrix} 1 & 3 \\ 2 & 7 \end{matrix}\right]\quad
+\left[A\ I\right]=\left[\begin{matrix} 1 & 3 & 1 & 0 \\ 2 & 7 & 0 & 1 \end{matrix}\right] %]]></script>
+
+<p>对增广矩阵做高斯-约当消元，可得：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left[\begin{matrix} 1 & 0 & 7 & -3 \\ 0 & 1 & -2 & 1 \end{matrix}\right] %]]></script>
+
+<p>则右边的方阵就是A的逆。神奇吗？proof：由上节可知消元过程可以等价于左乘矩阵E，则：</p>
+
+<script type="math/tex; mode=display">E\left[A\ I\right]=\left[EA\ EI\right]=\left[I\ E\right]\\ \Rightarrow EA=I</script>
+
+<h1 id="3lu分解转置与置换">3.LU分解，转置与置换</h1>
+<p>这节课主要推导了LU分解，计算了消元法的计算复杂度。对于矩阵 $A\in \mathbb{R}^{n\times n}$ ，在不考虑交换行的情况下，消元的复杂度为 $n^3/3$，对b的计算复杂度为 $n^2$。</p>
+
+<p>矩阵转置定义为 $A_{ij}^T=A_{ji}$，如果 $A^T=A$ 则A称为对称矩阵（symmetric matrix）。</p>
+
+<p>到这里消元这部分就告一段落了，下面进入向量空间的部分。</p>
+
+<hr />
 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
