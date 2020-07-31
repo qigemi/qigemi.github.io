@@ -14,6 +14,8 @@ related works：
 8. 用CRF整体匹配特征点而不是一对一匹配
 9. 图像灰度仿射变换
 
+主要大概两种思路：1.估计出亮度仿射变换系数；2.训练一种光照鲁棒的描述子或者词袋。
+
 ---
 **FAB-MAP: Probabilistic Localization and Mapping in the Space of Appearance**  
 http://www.robots.ox.ac.uk/~mjc/Papers/IJRR_2008_FabMap.pdf
@@ -59,7 +61,11 @@ http://www.ananth.in/Home_files/Ranganathan13icra.pdf
 根据深度信息得知平面，在平面上选patch并认为光照一样，通过和key frame的光度比较分别调整每个patch的仿射系数。
 
 **stereo LSD**(9)  
-和key frame优化位姿的时候就增加仿射系数a，b，分别优化ab和位姿，用不同的误差容忍度，ab的容忍度低，剔除错误数据，位姿只降低外点的权重，不剔除。闭环时在定位附近根据累积误差画圈，圈内所有key frame做上述优化，选误差小的认为loop。
+和key frame优化位姿的时候就增加灰度仿射系数a，b，（ $I'=I*a+b$ ），分别优化ab和位姿。用不同的误差容忍度，ab的容忍度低，对于误差大的数据需要剔除；优化位姿时误差大的数据只降低其权重，不剔除。
+
+闭环时在定位附近根据累积误差划定一个范围，范围内所有候选的 key frame 做上述优化，因为估计深度，所以可以求出 $T_{ij}, T_{ji}$ 两个位姿，两个位姿相差小的认为loop。其中在优化时，从最顶层金字塔开始匹配和优化，只有该层匹配效果好才进行下一层，可以提高速度。
+
+[blog](https://blog.csdn.net/j10527/article/details/69538707)
 
 ---
 **Dealing with Shadows: Capturing Intrinsic Scene Appearance for Image-based Outdoor Localisation**  
