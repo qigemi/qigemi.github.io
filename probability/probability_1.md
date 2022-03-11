@@ -47,11 +47,11 @@ layout: post
 
 当我们确定了概率模型之后，就可以计算概率了，比如某个事件的概率。这时如果有人告诉了你关于实验的其他信息，则我们应该根据这些信息修改我们之前计算的概率，因为我们有了更多的信息和判断依据。
 
-$P(A|B)$ 成为给定B发生的情况下，事件A发生的概率。这里B就是我们新的采样空间了。
+$P(A\vert B)$ 表示给定B发生的情况下，事件A发生的概率。这里B就是我们新的采样空间了。
 
 我们规定 $P(B) \neq 0$ ，则
 
-$$P(A|B)=\frac{P(A \cap B)}{P(B)}$$
+$$P(A\vert B)=\frac{P(A \cap B)}{P(B)}$$
 
 如果B的概率等于0，则该条件概率是未定义的。
 
@@ -59,39 +59,39 @@ $$P(A|B)=\frac{P(A \cap B)}{P(B)}$$
 
 *例子*：
 
-雷达监测飞机的例子，有飞机为事件A，没有为A'，雷达监测到飞机为事件B，没检测到是B'。已知 $P(B|A)=0.99$, $P(B'|A)=0.01$, $P(B|A')=0.1$, $P(B'|A')=0.9$。
+雷达监测飞机的例子，有飞机为事件A，没有为A'，雷达监测到飞机为事件B，没检测到是B'。已知 $P(B\vert A)=0.99$, $P(B'\vert A)=0.01$, $P(B\vert A')=0.1$, $P(B'\vert A')=0.9$。
 可以看出雷达识别正确的概率是很高的，都在90%以上，但是如果雷达报了监测到目标，而且确实有飞机的概率是多少呢。此时还需要知道有飞机的先验是多少，即 $P(A)=0.05, P(A')=0.95$。
 
 已知上面这些信息之后需要经过三步计算，
 
-$$P(A \cap B)=P(A)*P(B|A)=0.0495 \\
-P(B)=P(A)P(B|A) + P(A')P(B|A')=0.1445 \\
-P(A|B)=0.34$$
+$$P(A \cap B)=P(A)*P(B\vert A)=0.0495 \\
+P(B)=P(A)P(B\vert A) + P(A')P(B\vert A')=0.1445 \\
+P(A\vert B)=0.34$$
 
-实际上 $P(A|B)$ 只有0.34。为什么会和直觉相差这么多呢，因为有飞机的概率很小，大部分时间是没有飞机的，而此时雷达有10%的误检率，所以在雷达有信号的所有情况中，其实误检占了很大部分。
+实际上 $P(A\vert B)$ 只有0.34。为什么会和直觉相差这么多呢，因为有飞机的概率很小，大部分时间是没有飞机的，而此时雷达有10%的误检率，所以在雷达有信号的所有情况中，其实误检占了很大部分。
 
 再来看上面三个步骤，对应一般概率计算中的三个重要的公式。第一个式子类似链式法则，可以求多个事件共同发生的概率，即条件概率的连乘。
 
 第二个式子是全概率公式，假设将全空间分成几个小空间A1,A2,A3等等，则 B 发生的概率可以写为
 
-$$P(B)=P(A1)P(B|A1)\\+P(A2)P(B|A2)\\+P(A3)P(B|A3)$$
+$$P(B)=P(A1)P(B\vert A1)\\+P(A2)P(B\vert A2)\\+P(A3)P(B\vert A3)$$
 
 注意，因为$P(A1)+P(A2)+P(A3)=1$，所以上式也可以看成是一种**加权平均**。全概率公式让我们可以将问题分解为多个子问题进行求解，可能可以简化求解过程。
 
 第三个是贝叶斯公式，展开写：
 
-$$P(A|B)=\frac{P(A \cap B)}{P(B)}=\frac{P(A)P(B|A)}{P(A)P(B|A) + P(A')P(B|A')}$$
+$$P(A\vert B)=\frac{P(A \cap B)}{P(B)}=\frac{P(A)P(B\vert A)}{P(A)P(B\vert A) + P(A')P(B\vert A')}$$
 
 可以看到我们已知的都是在A发生条件下，B发生的概率，比如有飞机时雷达报警的概率是多少？没有飞机时又是多少？这是一种**因果**关系。
 而经过贝叶斯公式我们得到了B发生情况下A发生的概率，雷达报警了有飞机的概率是多少？没有飞机概率是多少？这是有“果”的情况下，我们**推断**“因”的过程。
 
-$$A_i \xrightarrow[P(B|A_i)]{cause-effect} B \\ A_i \xleftarrow[P(A_i|B)]{inference} B$$
+$$A_i \xrightarrow[P(B\vert A_i)]{cause-effect} B \\ A_i \xleftarrow[P(A_i\vert B)]{inference} B$$
 
 在实际应用中，我们可以通过观测结果，和贝叶斯公式来推断引起结果的原因。这是很多状态估计的基本方法。
 
 总结：
-1. 条件概率 $P(A|B)=\frac{P(A \cap B)}{P(B)}$
-2. 乘法规则 $P(A \cap B)=P(A|B)P(B)=P(B|A)P(A)$
+1. 条件概率 $P(A\vert B)=\frac{P(A \cap B)}{P(B)}$
+2. 乘法规则 $P(A \cap B)=P(A\vert B)P(B)=P(B\vert A)P(A)$
 3. 全概率公式
 4. 贝叶斯定理
 
@@ -99,15 +99,15 @@ $$A_i \xrightarrow[P(B|A_i)]{cause-effect} B \\ A_i \xleftarrow[P(A_i|B)]{infere
 
 两个时间相互独立，即一件事的发生，不会改变你对另一件事发生与否的概率估计。
 
-$$P(B|A)=P(B) \tag{1} $$
-$$P(A \cap B)=P(A|B)P(B)=P(A)P(B) \tag{2} $$
+$$P(B\vert A)=P(B) \tag{1} $$
+$$P(A \cap B)=P(A\vert B)P(B)=P(A)P(B) \tag{2} $$
 
 2式由1式推导而来，但是2式更常用，因为1式需要在P（A）大于零的时候才成立，而2式任何时候都成立。
 当且仅当（2）式成立时，我们称事件A和B独立。当然这是严谨的证明，我们如果能确定事件A的发生对B没有任何影响，就可以认为他们独立。
 
 对于条件概率的情况：
 
-$$P(A \cap B|C)=P(A|C)P(B|C)$$
+$$P(A \cap B\vert C)=P(A\vert C)P(B\vert C)$$
 
 **注意如果AB独立，那么在C发生的条件下AB不一定独立。反之，如果在C的条件下独立，A和B也不一定独立。**
 
@@ -119,7 +119,7 @@ $$P(A1 \cap A2 \cap A3)=P(A1)P(A2)P(A3)$$
 
 这里有一个例子。扔两次骰子，A:第一次是正面，P=0.5；B:第二次是正面，P=0.5；C:两次结果相同，P=0.5.
 
-其中，ABC两两独立，因为 $P(AB)=P(BC)=P(AC)=0.25$。但是ABC并不是相互独立，因为 $P(C|A \cap B)=1 \neq P(C)$ 。
+其中，ABC两两独立，因为 $P(AB)=P(BC)=P(AC)=0.25$。但是ABC并不是相互独立，因为 $P(C\vert A \cap B)=1 \neq P(C)$ 。
 
 还有另一个著名的例子：一个家庭有两个孩子，已知其中一个是男孩的情况下，另一个是女孩的概率是多少？答案是2/3，因为其中一个是男孩有三种情况：（男，男）（男，女）（女，男）。另一个是女孩占其中的2/3。
 
@@ -191,27 +191,27 @@ $$var(X) \geq 0 \\ var(\alpha X)=\alpha ^2var(X)$$
 
 条件概率也是正常概率，只是采样空间不同。
 
-$$p_{X|A}(x)=P(X=x|A) \\ E[X|A]=\sum_x xp_{X|A}(x)$$
+$$p_{X\vert A}(x)=P(X=x\vert A) \\ E[X\vert A]=\sum_x xp_{X\vert A}(x)$$
 
 所有期望和方差的性质对条件概率分布都适用。
 
 然后我们来看一种概率分布，几何概率分布函数，它的条件概率分布有一个有趣的性质。
 几何分布是如下形式。假设扔硬币正面向上的概率为p，则连续扔直到出现正面向上所需要的次数为随机变量X。
 
-$$p_X(k)=(1-p)^{k-1}p \\ p_{X-2|X>2}(k)=p_X(k)$$
+$$p_X(k)=(1-p)^{k-1}p \\ p_{X-2\vert X>2}(k)=p_X(k)$$
 
 第二个式子这样理解，如果我们先扔了两次，都是反面，那么 *后面继续扔* 和 *重新开始扔* 的概率分布应该一样。
 也就是已知X>2的情况下，（X-2）这个随机变量的概率分布和从零开始是一样的。
 
 然后我们利用这个性质来计算几何概率分布的期望。利用全概率公式，两边同时取期望：
 
-$$p_X(x)=P(A_1)p_{X|A_1}(x)+ \cdots +P(A_n)p_{X|A_n}(x) \\
-E[X]=P(A_1)E[X|A_1]+ \cdots +P(A_n)E[X|A_n]$$
+$$p_X(x)=P(A_1)p_{X\vert A_1}(x)+ \cdots +P(A_n)p_{X\vert A_n}(x) \\
+E[X]=P(A_1)E[X\vert A_1]+ \cdots +P(A_n)E[X\vert A_n]$$
 
 对于几何分布，设事件A1：X=1，事件A2：X>1。
 
 $$\begin{align}
-E[X]&=P(X=1)E[X|X=1]+P(X>1)E[X|X>1]\\
+E[X]&=P(X=1)E[X\vert X=1]+P(X>1)E[X\vert X>1]\\
     &=p \cdot 1 + (1-p) \cdot (E[X]+1)
 \end{align}$$
 
@@ -226,7 +226,7 @@ $$p_{X,Y}(x,y)=P(X=x \ and \ Y=y)$$
 
 $$\sum_x \sum_y p_{X,Y}(x,y)=1 \\
 p_X(x)=\sum_y p_{X,Y}(x,y) \\
-p_{X|Y}(x|y)=P(X=x|Y=y)=\frac{p_{X,Y}(x,y)}{p_Y(y)}$$
+p_{X\vert Y}(x\vert y)=P(X=x\vert Y=y)=\frac{p_{X,Y}(x,y)}{p_Y(y)}$$
 
 第二个式子称为边缘概率，有点类似全概率公式，比如要求X=x时的概率，就将所有X=x的情况都加起来。
 第三个式子是条件概率，给定Y=y时X的概率分布。同理可以推广到多个变量的联合概率分布。
@@ -356,7 +356,7 @@ $$f_{X,Y}(x,y)=f_X(x)f_Y(y)$$
 
 然后是条件概率密度函数：
 
-$$f_{X|Y}(x,y)=\frac{f_{X,Y}(x,y)}{f_Y(y)} \ if\ f_Y(y)>0$$
+$$f_{X\vert Y}(x,y)=\frac{f_{X,Y}(x,y)}{f_Y(y)} \ if\ f_Y(y)>0$$
 
 最后是一个有趣的例子。在等间距的平行线中（间距为d），扔一根长度为 l 的针（l < d)。因为针的长度小于间距，所以每次只能和一条线相交。问针与线相交的概率。
 
@@ -383,9 +383,9 @@ $$f_{X, \Theta}(x, \theta)=f_X(x)f_{\Theta}(\theta)=(2/d)\cdot (2/\pi)$$
 
 这时就出现了离散和连续混合的情况，比如X是离散随机变量，取值0，1，Y是连续随机变量，它等于X的值加上一个高斯噪声。如何根据Y的值推断X呢。这种情况的贝叶斯公式如下推导：
 
-$$P(X=x,y\leq Y\leq y+\delta)=P(X=x)P(y\leq Y\leq y+\delta|X=x)\\
-=P(y\leq Y\leq y+\delta)P(X=x|y\leq Y\leq y+\delta)\\
-\Rightarrow P_X(x)f_{Y|X}(y|x)\cdot \delta =f_Y(y)\cdot \delta \cdot P_{X|Y}(x|y)$$
+$$P(X=x,y\leq Y\leq y+\delta)=P(X=x)P(y\leq Y\leq y+\delta\vert X=x)\\
+=P(y\leq Y\leq y+\delta)P(X=x\vert y\leq Y\leq y+\delta)\\
+\Rightarrow P_X(x)f_{Y\vert X}(y\vert x)\cdot \delta =f_Y(y)\cdot \delta \cdot P_{X\vert Y}(x\vert y)$$
 
 两边的 $\delta$ 可以消掉。公式中P表示概率分布函数，f表示概率密度函数，它们和变量的形式是对应的。
 
@@ -405,9 +405,9 @@ $$F_Y(y)=P(Y\leq y)=P(g(X)\leq y)=P(X\leq g^{-1}(y))$$
 
 还有更通用的方法，就是利用微积分。这需要g是严格单调函数。
 
-对于 $Y=g(X)$ ，事件 $x\leq X \leq x+\delta$ 等价于事件 $g(x)\leq Y \leq g(x+\delta)$，近似于 $g(x) \leq Y \leq g(x) + \delta |(dg/dx)(x)|$，也就是相同概率，X，Y对应的无穷小区间长度不一样，有一个比例。具体关系为：
+对于 $Y=g(X)$ ，事件 $x\leq X \leq x+\delta$ 等价于事件 $g(x)\leq Y \leq g(x+\delta)$，近似于 $g(x)\leq Y\leq g(x) +\delta \vert (dg/dx)(x)\vert$ 也就是相同概率，X，Y对应的无穷小区间长度不一样，有一个比例。具体关系为：
 
-$$f(x)\delta =f(y)\delta |\frac{dg}{dx}(x)|$$
+$$f(x)\delta =f(y)\delta \vert \frac{dg}{dx}(x)\vert $$
 
 （据说可以从均匀分布生成任意分布，可能就是利用这个原理。比如我要生成一个奇怪的分布，只要有概率密度函数，就可以通过生成均匀分布的随机数，然后经过函数变换变成我们想要的分布。）
 
@@ -441,28 +441,28 @@ $$var(\sum X_i)=\sum var(X_i)+\sum_{i\neq j}cov(X_i,X_j)$$
 $$\rho =E[\frac{(X-E[X])}{\sigma_X}\frac{(Y-E[Y])}{\sigma_Y}]\\
 =\frac{cov(X,Y)}{\sigma_X \sigma_Y}\\
 -1\leq \rho \leq 1\\
-|\rho |=1 \ \Rightarrow \ (X-E[X])=c(Y-E[Y])$$
+\vert \rho \vert =1 \ \Rightarrow \ (X-E[X])=c(Y-E[Y])$$
 
 相关系数的取值范围在-1到1之间，如果其绝对值等于1，意味着XY有严格的线性关系，给出一个X就有一个确定的Y对应。
 
 # 9.迭代期望
 
-首先我们再讨论一下条件期望。如果给定 $Y=y$，则 $E(X|Y=y)=\sum xp_{X|Y}(x|y)$。如果使连续随机变量则是积分的形式。
+首先我们再讨论一下条件期望。如果给定 $Y=y$，则 $E(X\vert Y=y)=\sum xp_{X\vert Y}(x\vert y)$。如果使连续随机变量则是积分的形式。
 
-一个例子，将一根木棍第一次随机折断于y处，再将0-y的部分随机折断于x处，则 $E(X|Y=y)=y/2$。这是一个实数。
+一个例子，将一根木棍第一次随机折断于y处，再将0-y的部分随机折断于x处，则 $E(X\vert Y=y)=y/2$。这是一个实数。
 
-但如果我们不知道Y取何值，则 $E[X|Y]=Y/2$，这是一个随机变量，也就是说该条件期望的取值依赖于Y的取值，是随机变量Y的函数。
+但如果我们不知道Y取何值，则 $E[X\vert Y]=Y/2$，这是一个随机变量，也就是说该条件期望的取值依赖于Y的取值，是随机变量Y的函数。
 
 如果条件期望是随机变量，那么它也应该有一个期望（禁止套娃）。
 
-$$E[E[X|Y]]=?$$
+$$E[E[X\vert Y]]=?$$
 
-首先我们确定 $E[X|Y]=g(Y)$，则
+首先我们确定 $E[X\vert Y]=g(Y)$，则
 
 $$\begin{align}
-E[E[X|Y]]&=E[g(Y)]\\
+E[E[X\vert Y]]&=E[g(Y)]\\
 &=\sum_y g(y)p_Y(y)\\
-&=\sum_y E[X|Y=y]p_Y(y)\\
+&=\sum_y E[X\vert Y=y]p_Y(y)\\
 &=E[X]
 \end{align}$$
 
@@ -470,39 +470,39 @@ E[E[X|Y]]&=E[g(Y)]\\
 
 当然还有方差：
 
-$$var(X|Y=y)=E[(X-E[X|Y=y])^2|Y=y]$$
+$$var(X\vert Y=y)=E[(X-E[X\vert Y=y])^2\vert Y=y]$$
 
-这个就有点乱了。但是我们要知道 $var(X|Y)$ 同样是随机变量Y的函数。然后下面一个等式叫全方差公式：
+这个就有点乱了。但是我们要知道 $var(X\vert Y)$ 同样是随机变量Y的函数。然后下面一个等式叫全方差公式：
 
-$$var(X)=E[var(X|Y)]+var(E[X|Y])$$
+$$var(X)=E[var(X\vert Y)]+var(E[X\vert Y])$$
 
 这个证明看起来很爽，用到前面的知识：
 
 $$var(X)=E[X^2]-(E[X])^2\\
-var(X|Y)=E[X^2|Y]-(E[X|Y])^2\\
-E[var(X|Y)]=E[X^2]-E[(E[X|Y])^2]\\
-var(E[X|Y])=E[(E[X|Y])^2]-(E[X^2])$$
+var(X\vert Y)=E[X^2\vert Y]-(E[X\vert Y])^2\\
+E[var(X\vert Y)]=E[X^2]-E[(E[X\vert Y])^2]\\
+var(E[X\vert Y])=E[(E[X\vert Y])^2]-(E[X^2])$$
 
 然后将后两个式子相加就行了。通过这个推导我们可以进一步熟悉和理解这些符号表示的意思。
 
 对于全方差公式我们还可以这样理解。假设X表示每个学生的成绩，Y取值1或2，表示将学生分成两组，第一组10个人，第二组20个人。
 两组学生的平均成绩分别为：
 
-$$E[X|Y=1]=90,E[X|Y=2]=60$$
+$$E[X\vert Y=1]=90,E[X\vert Y=2]=60$$
 
-则 $E[X|Y]$ 就是一个随机变量，并且有：
+则 $E[X\vert Y]$ 就是一个随机变量，并且有：
 
-$$E[E[X|Y]]=1/3 \cdot 90 + 2/3 \cdot 60 = 70 = E[X]\\
-var(E[X|Y])=1/3\cdot (90-70)^2+2/3 \cdot (60-70)^2=200$$
+$$E[E[X\vert Y]]=1/3 \cdot 90 + 2/3 \cdot 60 = 70 = E[X]\\
+var(E[X\vert Y])=1/3\cdot (90-70)^2+2/3 \cdot (60-70)^2=200$$
 
 再假设每组方差为：
 
-$$var(X|Y=1)=10,var(X|Y=2)=20$$
+$$var(X\vert Y=1)=10,var(X\vert Y=2)=20$$
 
-则 $var(X|Y)$ 就是一个随机变量，并且有：
+则 $var(X\vert Y)$ 就是一个随机变量，并且有：
 
-$$E[var(X|Y)]=1/3 \cdot 10+2/3 \cdot 20=50/3\\
-var(X)=E[var(X|Y)]+var(E[X|Y])\\
+$$E[var(X\vert Y)]=1/3 \cdot 10+2/3 \cdot 20=50/3\\
+var(X)=E[var(X\vert Y)]+var(E[X\vert Y])\\
 =50/3 + 200$$
 
 **最后X的方差分为两部分，第一部分是组内的方差，第二部分是组间的方差。**

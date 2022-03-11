@@ -135,8 +135,8 @@ $$f_{Y_1}(y)=\lambda e^{(-\lambda y)}$$
 
 首先简单起见，我们的时间是离散的，系统状态是有限的。定义 $X_n$ 为系统在时刻n的状态，$X_0$ 为初始状态。定义：
 
-$$p_{ij}=P(X_{n+1}=j|X_n=i)\\
-=P(X_{n+1}=j|X_n=i,X_{n-1},\cdots ,X_0)$$
+$$p_{ij}=P(X_{n+1}=j\vert X_n=i)\\
+=P(X_{n+1}=j\vert X_n=i,X_{n-1},\cdots ,X_0)$$
 
 第一个等式是定义 $p_{ij}$ 表示当前状态是i的情况下，下一个状态是j的概率。第二个等式的意思是，这个概率只和当前状态有关，而和过去所有的状态无关。
 不管系统是怎么到达当前状态i的，从i到j的概率都是一样的。这是马尔可夫过程最重要的假设，也叫**马尔可夫性质**。
@@ -218,7 +218,7 @@ $$E[X]=\sum xp(x)\\ \geq \sum_{x\geq a}xp(x)\\ \geq \sum_{x\geq a}ap(x)\\
 
 对于下面的式子
 
-$$E[(X-\mu)^2]\geq P((X-\mu)^2\geq a^2)a^2\\=P(|X-\mu|\geq a)a^2$$
+$$E[(X-\mu)^2]\geq P((X-\mu)^2\geq a^2)a^2\\=P(\vert X-\mu\vert \geq a)a^2$$
 
 则表示，如果X的方差很小，则X偏离期望的概率也很小。
 
@@ -226,9 +226,9 @@ $$E[(X-\mu)^2]\geq P((X-\mu)^2\geq a^2)a^2\\=P(|X-\mu|\geq a)a^2$$
 
 $$\sigma ^2=\int (x-\mu)^2f(x)dx\\
 \geq \int_{\infty}^{\mu-c} (x-\mu)^2f(x)dx + \int_{\mu+c}^\infty (x-\mu)^2f(x)dx\\
-\geq c^2P(|x-\mu|\geq c)\\
-\Rightarrow P(|x-\mu|\geq c)\leq \frac{\sigma^2}{c^2}\\
-P(|x-\mu|\geq k\sigma)\leq \frac{1}{k^2}$$
+\geq c^2P(\vert x-\mu\vert \geq c)\\
+\Rightarrow P(\vert x-\mu\vert \geq c)\leq \frac{\sigma^2}{c^2}\\
+P(\vert x-\mu\vert \geq k\sigma)\leq \frac{1}{k^2}$$
 
 也就是说X偏离均值的程度越大，概率越小。比如偏离 $3\sigma$ 的概率小于等于 1/9。注意这是对任意随机变量来说的，不只是高斯分布。
 
@@ -236,7 +236,7 @@ P(|x-\mu|\geq k\sigma)\leq \frac{1}{k^2}$$
 
 那么随机变量是怎么收敛到一个数的呢。和数列极限类似，对于任意小的 $\epsilon$：
 
-$$\lim_{n\rightarrow \infty}P(|Y_n-a|\geq \epsilon)=0$$
+$$\lim_{n\rightarrow \infty}P(\vert Y_n-a\vert \geq \epsilon)=0$$
 
 Yn是一系列随机变量的数列，可以认为是随机过程，最后Y收敛到a，就是说最后随机变量Y的值，不在a附近任意小区间的概率为0。
 
@@ -253,7 +253,7 @@ var(M_n)=n\sigma ^2/n^2=\sigma ^2/n$$
 
 采样均值的期望和真实期望相同，但是方差会随着采样数量的增加而减小。套用切比雪夫不等式：
 
-$$P(|M_n-\mu |\geq c)\leq var(M_n)/c^2=\frac{\sigma ^2}{nc^2}$$
+$$P(\vert M_n-\mu \vert \geq c)\leq var(M_n)/c^2=\frac{\sigma ^2}{nc^2}$$
 
 用另一种说法就是，Mn在概率上收敛于 $\mu$。这就是弱大数定理。
 
@@ -341,7 +341,7 @@ $$P(S_n \leq 21.5)=P(Z\leq 1.17)=0.879$$
 则它的观测的分布是参数的函数 $P_X(x;\theta)$，通过分析该分布求参数的估计 $\hat \Theta$。
 2. 贝叶斯概率 Bayesian：认为未知的参数是一个随机变量，即使是电子质量，我们不认为是确定的值，
 只不过因为我们之前的一系列测量结果，我们对参数的分布有一个先验。
-则它的观测分布是在已知参数先验分布情况下的条件概率 $P_{X|\Theta}(x|\theta)$。通过该分布求参数的估计 $\hat \Theta$。
+则它的观测分布是在已知参数先验分布情况下的条件概率 $P_{X\vert \Theta}(x\vert \theta)$。通过该分布求参数的估计 $\hat \Theta$。
 
 注意，虽然两种方法的假设不同，但最后参数的估计 $\hat \Theta$ 都是一个随机变量。概率发展至今，哪种方法更加正确始终没有定论。
 我们会先讨论贝叶斯估计，然后是经典估计。
@@ -352,7 +352,7 @@ $$P(S_n \leq 21.5)=P(Z\leq 1.17)=0.879$$
 
 1.假设检验：
 
-$$p_{\Theta |X}(\theta|x)=\frac{p_{\Theta}(\theta)p_{X|\Theta}(x|\theta)}{p_X(x)}$$
+$$p_{\Theta \vert X}(\theta\vert x)=\frac{p_{\Theta}(\theta)p_{X\vert \Theta}(x\vert \theta)}{p_X(x)}$$
 
 首先已知参数的先验分布，以及给定参数的情况下，各种观测的分布函数。这是分子的部分。
 然后根据这些概率求和就得到分子的部分。最后就可以得到给定观测X的情况下，参数的后验概率分布。
@@ -383,22 +383,22 @@ $$E[(\Theta - E[\Theta])^2]=var(\Theta)$$
 
 就是参数的方差。
 
-对于有观测 $X=x$ 的情况，就是条件概率，最小化 $E[(\Theta - c)^2|X=x]$ 的结果是 $c=E[\Theta|X=x]$。
-对于每一个 $X$ 的取值，上式都是最优估计，所以 $E[\Theta|X]$ 就是所有X的函数中，对参数的最优估计。
+对于有观测 $X=x$ 的情况，就是条件概率，最小化 $E[(\Theta - c)^2\vert X=x]$ 的结果是 $c=E[\Theta\vert X=x]$。
+对于每一个 $X$ 的取值，上式都是最优估计，所以 $E[\Theta\vert X]$ 就是所有X的函数中，对参数的最优估计。
 
 总结一句话，**贝叶斯最小二乘估计就是条件期望。** 它是X的函数。
 
-$$\hat \Theta=E[\Theta|X]$$
+$$\hat \Theta=E[\Theta\vert X]$$
 
 估计误差：$\tilde \Theta=\hat{\Theta}-\Theta$，是一个随机变量
 
 $$E[\tilde \Theta]=0\\
-E[\tilde \Theta|X=x]=0$$
+E[\tilde \Theta\vert X=x]=0$$
 
 这表示参数的估计误差有时是正的有时是负的，但总体上误差为0，所以又叫**无偏估计**。
 还有几个性质
 
-$$E[\tilde \Theta h(X)|X]=0\rightarrow
+$$E[\tilde \Theta h(X)\vert X]=0\rightarrow
 E[\tilde \Theta h(X)]=0\\
 cov(\tilde \Theta, h(X))=0\rightarrow cov(\tilde \Theta, \hat \Theta)=0$$
 
@@ -457,8 +457,8 @@ $$\hat \theta_{ML}=arg \max_{\theta}p_X(x;\theta)$$
 
 对比贝叶斯最大后验概率估计：
 
-$$\hat \Theta_{MAP}=arg\max_{\theta}p_{\Theta|X}(\theta|x)\\
-=arg\max_{\theta}\frac{p_{X|\Theta}(x|\theta)p_{\Theta}(\theta)}{p_X(x)}$$
+$$\hat \Theta_{MAP}=arg\max_{\theta}p_{\Theta\vert X}(\theta\vert x)\\
+=arg\max_{\theta}\frac{p_{X\vert \Theta}(x\vert \theta)p_{\Theta}(\theta)}{p_X(x)}$$
 
 它们在形式上非常相似。上式分母和参数无关，所以只看分子。分子只和极大似然概率相差一个参数的先验分布。如果先验分布是常数，即均匀分布，
 则两种方法得到的结果就完全一样了。所以我们也可以认为，**极大似然估计就是假设参数均匀分布的最大后验估计**。
@@ -508,7 +508,7 @@ $\alpha$ 表示误差的大小，一般取0.05，0.01。95%置信区间表示，
 
 对于样本均值来说，根据中心极限定理，样本均值可以归一化成标准正态分布，然后通过查表得到95%置信区间的范围是[-1.96,1.96]
 
-$$P(\frac{|\hat \Theta_n-\theta|}{\sigma/\sqrt{n}}\leq 1.96)\approx 0.95\\
+$$P(\frac{\vert \hat \Theta_n-\theta\vert }{\sigma/\sqrt{n}}\leq 1.96)\approx 0.95\\
 P(\hat \Theta-\frac{1.96\sigma}{\sqrt n}\leq \theta \leq \hat \Theta+\frac{1.96\sigma}{\sqrt n})\approx 0.95$$
 
 上式不等式就表示了0.95置信区间的范围。我们也可以看到，n越大置信区间就越小。当然这个区间并不是精确的，但是当n很大的时候
@@ -554,7 +554,7 @@ $$\frac{cov(X,Y)}{var(X)}$$
 1. 参数的置信区间
 2. 噪声的方差，方差大的预测不准
 3.  $R^2$
-4. 计算 $\frac{var(Y|X)}{var(Y)}$
+4. 计算 $\frac{var(Y\vert X)}{var(Y)}$
 
 最后一个式子这样理解：在没有观测的情况下，Y有方差这么大的不确定性，在有观测X后，因为有了额外的信息，
 Y的不确定性也就是方差会变小。这个变小的程度就表示了X和Y的相关程度。根据这个公式可以估计Y的不确定性来自各个变量的成分有多少。
@@ -577,9 +577,9 @@ Y的不确定性也就是方差会变小。这个变小的程度就表示了X和
 
 1.贝叶斯最大后验概率，当满足下面的条件时，选择H1：
 
-$$P(H_1|X=x)>P(H_0|X=x)\\
-or\ \frac{P(X=x|H_1)P(H_1)}{P(X=x)}>\frac{P(X=x|H_0)P(H_0)}{P(X=x)}\\
-or\ \frac{P(X=x|H_1)}{P(X=x|H_0)}>\frac{P(H_0)}{P(H_1)}$$
+$$P(H_1\vert X=x)>P(H_0\vert X=x)\\
+or\ \frac{P(X=x\vert H_1)P(H_1)}{P(X=x)}>\frac{P(X=x\vert H_0)P(H_0)}{P(X=x)}\\
+or\ \frac{P(X=x\vert H_1)}{P(X=x\vert H_0)}>\frac{P(H_0)}{P(H_1)}$$
 
 2. 非贝叶斯，满足下面的条件时，选择H1：
 
